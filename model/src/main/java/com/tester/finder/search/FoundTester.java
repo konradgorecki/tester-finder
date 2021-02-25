@@ -1,12 +1,10 @@
 package com.tester.finder.search;
 
-import com.tester.finder.core.Device;
 import com.tester.finder.core.Tester;
 import lombok.Value;
 
 @Value
-public class DeviceTester {
+public class FoundTester {
     Tester tester;
-    Device device;
     Integer experience;
 }

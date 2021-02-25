@@ -1,6 +1,7 @@
 package com.tester.finder.search
 
 import com.tester.finder.core.Bug
+import com.tester.finder.core.Country
 import com.tester.finder.core.Device
 import com.tester.finder.core.Tester
 import com.tester.finder.search.util.BugsFactory
@@ -26,7 +27,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         testersFinder.findTesters(searchCriteria)
 
         then:
-        thrown RuntimeException//TODO consider replacing it with business runtime exception
+        thrown NullPointerException
     }
 
     def 'missing country code in search criteria'() {
@@ -44,7 +45,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         testersFinder.findTesters(searchCriteria)
 
         then:
-        thrown RuntimeException//TODO consider replacing it with business runtime exception
+        thrown InvalidSearchCriteriaException
     }
 
     def 'missing country code list in search criteria'() {
@@ -62,7 +63,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         testersFinder.findTesters(searchCriteria)
 
         then:
-        thrown RuntimeException//TODO consider replacing it with business runtime exception
+        thrown NullPointerException
     }
 
     def 'missing device in search criteria'() {
@@ -80,7 +81,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         testersFinder.findTesters(searchCriteria)
 
         then:
-        thrown RuntimeException//TODO consider replacing it with business runtime exception
+        thrown InvalidSearchCriteriaException
     }
 
     def 'missing device list in search criteria'() {
@@ -98,7 +99,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         testersFinder.findTesters(searchCriteria)
 
         then:
-        thrown RuntimeException//TODO consider replacing it with business runtime exception
+        thrown NullPointerException
     }
 
     def 'unknown device in search criteria'() {
@@ -117,7 +118,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         testersFinder.findTesters(searchCriteria)
 
         then:
-        thrown RuntimeException//TODO consider replacing it with business runtime exception
+        thrown InvalidSearchCriteriaException
     }
 
     def 'unknown country code in search criteria'() {
@@ -136,7 +137,43 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         testersFinder.findTesters(searchCriteria)
 
         then:
-        thrown RuntimeException//TODO consider replacing it with business runtime exception
+        thrown InvalidSearchCriteriaException
+    }
+
+    def 'country code ALL mixed with other country codes in search criteria'() {
+        given:
+        Device device = DevicesFactory.create(2)
+        Tester tester = TestersFactory.create(2, 'PL', device)
+        List<Bug> bugs = BugsFactory.create(tester, device, 2)
+
+        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+
+        and:
+        TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(tester.getCountry().getCode(), Country.ALL.getCode()), List.of(device.getId()))
+
+        when:
+        testersFinder.findTesters(searchCriteria)
+
+        then:
+        thrown InvalidSearchCriteriaException
+    }
+
+    def 'device ALL mixed with other devices in search criteria'() {
+        given:
+        Device device = DevicesFactory.create(2)
+        Tester tester = TestersFactory.create(2, 'PL', device)
+        List<Bug> bugs = BugsFactory.create(tester, device, 2)
+
+        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+
+        and:
+        TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of('PL'), List.of(device.getId(), Device.ALL.getId()))
+
+        when:
+        testersFinder.findTesters(searchCriteria)
+
+        then:
+        thrown InvalidSearchCriteriaException
     }
 
 }
