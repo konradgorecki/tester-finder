@@ -1,0 +1,5 @@
+rootProject.name = 'tester-finder'
+include 'model'
+include 'infrastructure'
+include 'app'
+
