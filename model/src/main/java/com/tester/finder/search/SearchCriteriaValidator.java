@@ -36,7 +36,9 @@ public class SearchCriteriaValidator {
     }
 
     private void validateDevices(List<Integer> deviceIds) {
-        //TODO add special validation for option ALL
+        if (deviceIds.contains(Device.ALL.getId()) && deviceIds.size() > 1) {
+            throw new InvalidSearchCriteriaException("Specified specific devices despite ALL flag: " + concatToString(deviceIds));
+        }
         List<Device> devices = devicesRepository.findByIds(deviceIds);
         if (devices.size() < deviceIds.size()) {
             throw new InvalidSearchCriteriaException("Unknown devices found in search criteria" + concatToString(deviceIds));
@@ -48,7 +50,9 @@ public class SearchCriteriaValidator {
 
 
     private void validateCountryCodes(List<String> countryCodes) {
-        //TODO add special validation for option ALL
+        if (countryCodes.contains(Country.ALL.getCode()) && countryCodes.size() > 1) {
+            throw new InvalidSearchCriteriaException("Specified specific countries despite ALL flag: " + concatToString(countryCodes));
+        }
         List<Country> countries = countriesRepository.findByCodes(countryCodes);
         if (countries.size() < countryCodes.size()) {
             throw new InvalidSearchCriteriaException("Unknown country codes found in search criteria" + concatToString(countryCodes));
