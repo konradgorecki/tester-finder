@@ -1,13 +1,13 @@
 package com.tester.finder.search;
 
-import com.tester.finder.core.CountriesRepository;
+import com.google.common.base.Joiner;
+import com.tester.finder.core.repository.CountriesRepository;
 import com.tester.finder.core.Country;
 import com.tester.finder.core.Device;
-import com.tester.finder.core.DevicesRepository;
+import com.tester.finder.core.repository.DevicesRepository;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class SearchCriteriaValidator {
@@ -37,34 +37,28 @@ public class SearchCriteriaValidator {
 
     private void validateDevices(List<Integer> deviceIds) {
         if (deviceIds.contains(Device.ALL.getId()) && deviceIds.size() > 1) {
-            throw new InvalidSearchCriteriaException("Specified specific devices despite ALL flag: " + concatToString(deviceIds));
+            throw new InvalidSearchCriteriaException("Specified specific devices despite ALL flag: " + Joiner.on(", ").join(deviceIds));
         }
         List<Device> devices = devicesRepository.findByIds(deviceIds);
         if (devices.size() < deviceIds.size()) {
-            throw new InvalidSearchCriteriaException("Unknown devices found in search criteria" + concatToString(deviceIds));
+            throw new InvalidSearchCriteriaException("Unknown devices found in search criteria" + Joiner.on(", ").join(deviceIds));
         }
         if (devices.size() > deviceIds.size()) {
-            throw new IllegalStateException("Illegal devices repository state for device list query: " + concatToString(deviceIds));
+            throw new IllegalStateException("Illegal devices repository state for device list query: " + Joiner.on(", ").join(deviceIds));
         }
     }
-
 
     private void validateCountryCodes(List<String> countryCodes) {
         if (countryCodes.contains(Country.ALL.getCode()) && countryCodes.size() > 1) {
-            throw new InvalidSearchCriteriaException("Specified specific countries despite ALL flag: " + concatToString(countryCodes));
+            throw new InvalidSearchCriteriaException("Specified specific countries despite ALL flag: " + Joiner.on(", ").join(countryCodes));
         }
         List<Country> countries = countriesRepository.findByCodes(countryCodes);
         if (countries.size() < countryCodes.size()) {
-            throw new InvalidSearchCriteriaException("Unknown country codes found in search criteria" + concatToString(countryCodes));
+            throw new InvalidSearchCriteriaException("Unknown country codes found in search criteria" + Joiner.on(", ").join(countryCodes));
         }
         if (countries.size() > countryCodes.size()) {
-            throw new IllegalStateException("Illegal countries repository state for country code list query: " + concatToString(countryCodes));
+            throw new IllegalStateException("Illegal countries repository state for country code list query: " + Joiner.on(", ").join(countryCodes));
         }
     }
 
-    private String concatToString(List<?> list) {
-        return list.stream()
-                .map(Object::toString)
-                .collect(Collectors.joining(", "));
-    }
 }

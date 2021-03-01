@@ -1,6 +1,8 @@
 package com.tester.finder.search;
 
 import com.tester.finder.core.*;
+import com.tester.finder.core.repository.BugsRepository;
+import com.tester.finder.core.repository.TestersRepository;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 

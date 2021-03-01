@@ -1,9 +1,9 @@
 package com.tester.finder.search.util
 
-import com.tester.finder.core.BugsRepository
-import com.tester.finder.core.CountriesRepository
-import com.tester.finder.core.DevicesRepository
-import com.tester.finder.core.TestersRepository
+import com.tester.finder.core.repository.BugsRepository
+import com.tester.finder.core.repository.CountriesRepository
+import com.tester.finder.core.repository.DevicesRepository
+import com.tester.finder.core.repository.TestersRepository
 
 class Repositories {
     private final TestersRepository testersRepository

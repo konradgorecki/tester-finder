@@ -31,6 +31,5 @@ class BugsFactory {
     static Integer generateBugId() {
         Random rand = new Random()
         rand.nextInt()
-        Integer.MAX_VALUE
     }
 }

@@ -7,9 +7,7 @@ import lombok.Value;
 @EqualsAndHashCode
 public class Country {
 
-    public static final Country ALL = new Country("ALL", "All");
+    public static final Country ALL = new Country("ALL");
 
     String code;
-    @EqualsAndHashCode.Exclude String description;//TODO confirm if we need this
-
 }
