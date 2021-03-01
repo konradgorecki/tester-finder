@@ -57,10 +57,11 @@ class TestersFinderSearchLogicTest extends Specification {
         Integer searchedDeviceId = 5
 
         Device device = DevicesFactory.create(deviceId)
+        Device searchedDevice = DevicesFactory.create(searchedDeviceId)
         Tester tester = TestersFactory.create(5, 'DE', device)
         List<Bug> bugs = BugsFactory.create(tester, device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device, searchedDevice), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(Country.ALL.code), List.of(searchedDeviceId))
@@ -74,17 +75,17 @@ class TestersFinderSearchLogicTest extends Specification {
 
     def 'no testers found when there are no testers meeting the country criterion'() {
         given:
-        String testerCountryCode = 'LT'
-        String searchedCountryCode = 'US'
+        Country testerCountry = new Country('LT')
+        Country searchedCountry = new Country('US')
 
         Device device = DevicesFactory.create(4)
-        Tester tester = TestersFactory.create(3, testerCountryCode, device)
+        Tester tester = TestersFactory.create(3, testerCountry, List.of(device))
         List<Bug> bugs = BugsFactory.create(tester, device, 5)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs, List.of(testerCountry, searchedCountry))
 
         and:
-        TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(searchedCountryCode), List.of(device.getId()))
+        TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(searchedCountry.getCode()), List.of(device.getId()))
 
         when:
         FoundTesters foundTesters = testersFinder.findTesters(searchCriteria)

@@ -11,8 +11,8 @@ class BugsFactory {
 
     static List<Bug> create(List<Tester> testers, Device device, Integer bugsCount) {
         testers.stream()
-        .flatMap(tester -> create(tester, device, bugsCount))
-        .collect(Collectors.toList())
+                .flatMap(tester -> create(tester, device, bugsCount).stream())
+                .collect(Collectors.toList())
     }
 
     static List<Bug> create(Tester tester, Device device, Integer bugsCount) {

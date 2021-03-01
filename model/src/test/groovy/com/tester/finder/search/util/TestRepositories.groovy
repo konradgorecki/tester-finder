@@ -19,7 +19,16 @@ class TestRepositories {
         TestersRepository testersRepository = initTestersRepository(testers)
         DevicesRepository devicesRepository = initDevicesRepository(devices)
         BugsRepository bugsRepository = initBugsRepository(bugs)
-        CountriesRepository countriesRepository = initCountriesRepository(testers)
+        CountriesRepository countriesRepository = initCountriesRepositoryFromTesters(testers)
+
+        new Repositories(testersRepository, devicesRepository, bugsRepository, countriesRepository)
+    }
+
+    static Repositories prepareRepositories(List<Tester> testers, List<Device> devices, List<Bug> bugs, List<Country> countries) {
+        TestersRepository testersRepository = initTestersRepository(testers)
+        DevicesRepository devicesRepository = initDevicesRepository(devices)
+        BugsRepository bugsRepository = initBugsRepository(bugs)
+        CountriesRepository countriesRepository = initCountriesRepositoryFromCountries(countries)
 
         new Repositories(testersRepository, devicesRepository, bugsRepository, countriesRepository)
     }
@@ -42,9 +51,16 @@ class TestRepositories {
         bugsRepository
     }
 
-    static CountriesRepository initCountriesRepository(List<Tester> testers) {
+    static CountriesRepository initCountriesRepositoryFromTesters(List<Tester> testers) {
         Set<Country> countries = new HashSet<>()
         testers.each {tester -> countries.add(tester.getCountry())}
+        CountriesRepository countriesRepository = new InMemoryCountriesRepository()
+        countries.each {country -> countriesRepository.save(country)}
+        countriesRepository
+    }
+
+
+    static CountriesRepository initCountriesRepositoryFromCountries(List<Country> countries) {
         CountriesRepository countriesRepository = new InMemoryCountriesRepository()
         countries.each {country -> countriesRepository.save(country)}
         countriesRepository

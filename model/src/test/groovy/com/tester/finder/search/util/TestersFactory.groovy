@@ -13,8 +13,13 @@ class TestersFactory {
     }
 
     static Tester create(Integer id, String countryCode, List<Device> devices) {
+        create(id, new Country(countryCode), devices)
+    }
+
+    static Tester create(Integer id, Country country, List<Device> devices) {
         Tester.builder()
-                .country(new Country(countryCode))
+                .id(id)
+                .country(country)
                 .devices(devices)
                 .firstName(String.valueOf(id))
                 .lastName(String.valueOf(id))
