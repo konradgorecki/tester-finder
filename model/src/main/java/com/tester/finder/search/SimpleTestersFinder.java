@@ -43,8 +43,14 @@ public class SimpleTestersFinder implements TestersFinder {
 
     @NonNull
     private FoundTester calculateExperience(Tester tester, List<Integer> deviceIds) {
+        boolean matchAllDevices = deviceIds.size() == 1
+                && Device.ALL.getId().equals(deviceIds.get(0));
+
         long experience = bugsRepository.findByTester(tester).stream()
-                .filter(bug -> deviceIds.contains(bug.getDevice().getId())).count();
+                .filter(matchAllDevices ?
+                        bug -> true :
+                        bug -> deviceIds.contains(bug.getDevice().getId()))
+                .count();
         return new FoundTester(tester, (int) experience);
     }
 }

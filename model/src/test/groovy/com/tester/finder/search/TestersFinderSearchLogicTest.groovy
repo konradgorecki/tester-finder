@@ -196,8 +196,8 @@ class TestersFinderSearchLogicTest extends Specification {
         Tester tester4 = TestersFactory.create(7, 'DE', device)
         Tester tester5 = TestersFactory.create(9, 'DE', device)
 
-        List<Bug> bugs1 = BugsFactory.create(List.of(tester1, tester2), device, smallExperience)
-        List<Bug> bugs2 = BugsFactory.create(List.of(tester3, tester4, tester5), device, bigExperience)
+        List<Bug> bugs1 = BugsFactory.create(List.of(tester1, tester2), device2, smallExperience)
+        List<Bug> bugs2 = BugsFactory.create(List.of(tester3, tester4, tester5), device2, bigExperience)
         List<Bug> bugs = Stream.concat(bugs1.stream(), bugs2.stream()).collect(Collectors.toList())
 
         TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2, tester3, tester4, tester5), List.of(device, device2), bugs)
@@ -268,9 +268,10 @@ class TestersFinderSearchLogicTest extends Specification {
         Integer lotsOfBugsFixed = 5
         Device device = DevicesFactory.create(1)
         Device device2 = DevicesFactory.create(2)
-        Tester tester1 = TestersFactory.create(1,                                                                                                         'PL', device)
-        Tester tester2 = TestersFactory.create(2, 'ES', device2)
+        Tester tester1 = TestersFactory.create(1, 'PL', device)
+        Tester tester2 = TestersFactory.create(2, 'ES', List.of(device, device2))
         Tester tester3 = TestersFactory.create(3, 'FR', List.of(device, device2))
+
         List<Bug> bugs1 = BugsFactory.create(List.of(tester1, tester2), device, coupleOfBugsFixed)
         List<Bug> bugs2 = BugsFactory.create(List.of(tester2, tester3), device2, lotsOfBugsFixed)
         List<Bug> bugs = Stream.concat(bugs1.stream(), bugs2.stream()).collect(Collectors.toList())
