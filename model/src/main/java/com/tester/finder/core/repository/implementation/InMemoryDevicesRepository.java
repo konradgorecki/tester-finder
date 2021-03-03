@@ -30,4 +30,9 @@ public class InMemoryDevicesRepository implements DevicesRepository {
                 .filter(Objects::nonNull) // Map::get might return null in case of missing object
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Device findById(Integer id) {
+        return devices.get(id);
+    }
 }

@@ -35,4 +35,11 @@ public class InMemoryTestersRepository implements TestersRepository {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Tester findById(Integer id) {
+        return findAll().stream()
+                .filter(tester -> tester.getId().equals(id))
+                .findAny()
+                .orElse(null);
+    }
 }

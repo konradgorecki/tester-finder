@@ -8,4 +8,5 @@ public interface TestersRepository {
     void save(Tester tester);
     List<Tester> findByDeviceId(List<Integer> deviceIds);
     List<Tester> findAll();
+    Tester findById(Integer id);
 }
