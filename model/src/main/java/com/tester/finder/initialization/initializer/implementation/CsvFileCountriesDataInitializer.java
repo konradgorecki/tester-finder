@@ -1,6 +1,7 @@
-package com.tester.finder.initialization;
+package com.tester.finder.initialization.initializer.implementation;
 
 import com.tester.finder.core.repository.CountriesRepository;
+import com.tester.finder.initialization.initializer.CountriesDataInitializer;
 import lombok.AllArgsConstructor;
 
 import java.io.File;

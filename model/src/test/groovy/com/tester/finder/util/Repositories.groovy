@@ -1,4 +1,4 @@
-package com.tester.finder.search.util
+package com.tester.finder.util
 
 import com.tester.finder.core.repository.BugsRepository
 import com.tester.finder.core.repository.CountriesRepository

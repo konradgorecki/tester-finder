@@ -1,51 +1,55 @@
 package com.tester.finder.initialization
 
-import com.tester.finder.core.repository.implementation.InMemoryCountriesRepository
-import com.tester.finder.core.repository.implementation.InMemoryDevicesRepository
-import com.tester.finder.core.repository.implementation.InMemoryTestersRepository
+import com.tester.finder.initialization.initializer.implementation.CsvFilesDataInitializer
+import com.tester.finder.util.TestFileFactory
+import com.tester.finder.util.TestRepositoryFactory
 import spock.lang.Specification
 
 class CsvFileTestersDataInitializerTest extends Specification {
 
     def "load countries from testers csv file"() {
         given:
-        def testersTestFile = getTestFile("testers.csv")
+        def testFiles = TestFileFactory.create()
 
         and:
-        def countriesRepository = new InMemoryCountriesRepository()
-        def countriesDataInitializer = new CsvFileCountriesDataInitializer(countriesRepository)
+        def repositories = TestRepositoryFactory.create()
+        def dataInitializer = new CsvFilesDataInitializer(repositories.getCountriesRepository(),
+                repositories.getTestersRepository(), repositories.getDevicesRepository(), repositories.getBugsRepository())
 
         when:
-        countriesDataInitializer.initFromFile(testersTestFile)
+        dataInitializer.initData(testFiles.getTestersTestFile(), testFiles.getDevicesTestFile(), testFiles.getTesterDeviceMatchingFile(), testFiles.getBugsFile())
 
         then:
         noExceptionThrown()
-        countriesRepository.findAll().size() == 2
-        countriesRepository.findByCodes(List.of('PL', 'DE')).size() == 2
+        repositories.getCountriesRepository().findAll().size() == 2
+        2 * repositories.countriesRepository.save(_)
+        repositories.getCountriesRepository().findByCodes(List.of('PL', 'DE')).size() == 2
     }
 
     def "load testers from csv file"() {
         given:
-        def testersTestFile = getTestFile("testers.csv")
+        def testFiles = TestFileFactory.create()
 
         and:
-        def testersRepository = new InMemoryTestersRepository()
-        def testersDataInitializer = new CsvFileTestersDataInitializer(testersRepository)
+        def repositories = TestRepositoryFactory.create()
+        def dataInitializer = new CsvFilesDataInitializer(repositories.getCountriesRepository(),
+                repositories.getTestersRepository(), repositories.getDevicesRepository(), repositories.getBugsRepository())
 
         when:
-        testersDataInitializer.initFromFile(testersTestFile)
+        dataInitializer.initData(testFiles.getTestersTestFile(), testFiles.getDevicesTestFile(), testFiles.getTesterDeviceMatchingFile(), testFiles.getBugsFile())
 
         then:
         noExceptionThrown()
-        testersRepository.findAll().size() == 2
+        repositories.getTestersRepository().findAll().size() == 2
+        2 * repositories.testersRepository.save(_)
 
-        def tester1 = testersRepository.findById(1)
+        def tester1 = repositories.getTestersRepository().findById(1)
         tester1 != null
         tester1.getFirstName() == 'Franciszek'
         tester1.getLastName() == 'Dolas'
         tester1.getCountry().getCode() == 'PL'
 
-        def tester2 = testersRepository.findById(2)
+        def tester2 = repositories.getTestersRepository().findById(2)
         tester2 != null
         tester2.getFirstName() == 'Reinhard'
         tester2.getLastName() == 'Loose'
@@ -54,24 +58,26 @@ class CsvFileTestersDataInitializerTest extends Specification {
 
     def "load devices from csv file"() {
         given:
-        def devicesTestFile = getTestFile("devices.csv")
+        def testFiles = TestFileFactory.create()
 
         and:
-        def devicesRepository = new InMemoryDevicesRepository()
-        def devicesDataInitializer = new CsvFileDevicesDataInitializer(devicesRepository)
+        def repositories = TestRepositoryFactory.create()
+        def dataInitializer = new CsvFilesDataInitializer(repositories.getCountriesRepository(),
+                repositories.getTestersRepository(), repositories.getDevicesRepository(), repositories.getBugsRepository())
 
         when:
-        devicesDataInitializer.initFromFile(devicesTestFile)
+        dataInitializer.initData(testFiles.getTestersTestFile(), testFiles.getDevicesTestFile(), testFiles.getTesterDeviceMatchingFile(), testFiles.getBugsFile())
 
         then:
         noExceptionThrown()
-        devicesRepository.findAll().size() == 2
+        2 * repositories.devicesRepository.save(_)
+        repositories.getDevicesRepository().findAll().size() == 2
 
-        def device1 = devicesRepository.findById(1)
+        def device1 = repositories.getDevicesRepository().findById(1)
         device1 != null
         device1.getDescription() == 'Samsung Galaxy S10'
 
-        def device2 = devicesRepository.findById(2)
+        def device2 = repositories.getDevicesRepository().findById(2)
         device2 != null
         device2.getDescription() == 'iPhone X'
 
@@ -79,46 +85,43 @@ class CsvFileTestersDataInitializerTest extends Specification {
 
     def "load testers and their devices from csv files"() {
         given:
-        def testersTestFile = getTestFile("testers.csv")
-        def devicesTestFile = getTestFile("devices.csv")
-        def testerDeviceMatchingFile = getTestFile("tester_device.csv")
+        def testFiles = TestFileFactory.create()
 
         and:
-        def countriesRepository = new InMemoryCountriesRepository()
-        def testersRepository = new InMemoryTestersRepository()
-        def devicesRepository = new InMemoryDevicesRepository()
-
-        def countriesDataInitializer = new CsvFileCountriesDataInitializer(countriesRepository)
-        def testersDataInitializer = new CsvFileTestersDataInitializer(testersRepository)
-        def devicesDataInitializer = new CsvFileDevicesDataInitializer(devicesRepository)
-        def testerDeviceDataInitializer = new CsvFileTesterDeviceDataInitializer(testersRepository, devicesRepository)
+        def repositories = TestRepositoryFactory.create()
+        def dataInitializer = new CsvFilesDataInitializer(repositories.getCountriesRepository(),
+                repositories.getTestersRepository(), repositories.getDevicesRepository(), repositories.getBugsRepository())
 
         when:
-        countriesDataInitializer.initFromFile(testersTestFile)
-        testersDataInitializer.initFromFile(testersTestFile)
-        devicesDataInitializer.initFromFile(devicesTestFile)
-        testerDeviceDataInitializer.initFromFile(testerDeviceMatchingFile)
+        dataInitializer.initData(testFiles.getTestersTestFile(), testFiles.getDevicesTestFile(), testFiles.getTesterDeviceMatchingFile(), testFiles.getBugsFile())
 
         then:
         noExceptionThrown()
-        //TODO detailed check here
+        def tester1 = repositories.getTestersRepository().findById(1)
+        tester1.getDevices().size() == 2
+        tester1.getDevices().any { device -> device.getId() == 1 }
+        tester1.getDevices().any { device -> device.getId() == 2 }
+
+        def tester2 = repositories.getTestersRepository().findById(2)
+        tester2.getDevices().size() == 1
+        tester2.getDevices().any { device -> device.getId() == 1 }
+        !tester2.getDevices().any { device -> device.getId() == 2 }
     }
 
     def "load bugs from csv file"() {
+        given:
+        def testFiles = TestFileFactory.create()
 
+        and:
+        def repositories = TestRepositoryFactory.create()
+        def dataInitializer = new CsvFilesDataInitializer(repositories.getCountriesRepository(),
+                repositories.getTestersRepository(), repositories.getDevicesRepository(), repositories.getBugsRepository())
+
+        when:
+        dataInitializer.initData(testFiles.getTestersTestFile(), testFiles.getDevicesTestFile(), testFiles.getTesterDeviceMatchingFile(), testFiles.getBugsFile())
+
+        then:
+        10 * repositories.bugsRepository.save(_)
     }
 
-
-    //TODO consider moving it to some utility class
-    private File getTestFile(String fileName) {
-        ClassLoader classLoader = getClass().getClassLoader()
-
-        URL resource = classLoader.getResource(fileName);
-        if (resource == null) {
-            throw new IllegalArgumentException("file not found! " + fileName);
-        }
-
-        //File file = new File(resource.getFile());
-        new File(resource.toURI());
-    }
 }

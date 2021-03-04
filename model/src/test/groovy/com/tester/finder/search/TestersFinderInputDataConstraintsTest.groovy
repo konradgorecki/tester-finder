@@ -4,10 +4,10 @@ import com.tester.finder.core.Bug
 import com.tester.finder.core.Country
 import com.tester.finder.core.Device
 import com.tester.finder.core.Tester
-import com.tester.finder.search.util.BugsFactory
-import com.tester.finder.search.util.DevicesFactory
-import com.tester.finder.search.util.TesterFinderFactory
-import com.tester.finder.search.util.TestersFactory
+import com.tester.finder.util.BugsFactory
+import com.tester.finder.util.DevicesFactory
+import com.tester.finder.util.TesterFinderFactory
+import com.tester.finder.util.TestersFactory
 import spock.lang.Specification
 
 class TestersFinderInputDataConstraintsTest extends Specification {

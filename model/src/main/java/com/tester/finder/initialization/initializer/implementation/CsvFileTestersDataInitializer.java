@@ -1,16 +1,15 @@
-package com.tester.finder.initialization;
+package com.tester.finder.initialization.initializer.implementation;
 
-import com.tester.finder.core.repository.DevicesRepository;
 import com.tester.finder.core.repository.TestersRepository;
+import com.tester.finder.initialization.initializer.TestersDataInitializer;
 import lombok.AllArgsConstructor;
 
 import java.io.File;
 
 @AllArgsConstructor
-public class CsvFileTesterDeviceDataInitializer implements TesterDeviceDataInitializer {
+public class CsvFileTestersDataInitializer implements TestersDataInitializer {
 
     private final TestersRepository testersRepository;
-    private final DevicesRepository devicesRepository;
 
     @Override
     public void initFromFile(File file) {

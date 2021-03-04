@@ -1,4 +1,4 @@
-package com.tester.finder.search.util
+package com.tester.finder.util
 
 import com.tester.finder.core.Country
 import com.tester.finder.core.Device

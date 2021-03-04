@@ -1,4 +1,4 @@
-package com.tester.finder.initialization;
+package com.tester.finder.initialization.initializer;
 
 import java.io.File;
 

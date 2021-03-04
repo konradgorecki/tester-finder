@@ -1,4 +1,4 @@
-package com.tester.finder.search.util
+package com.tester.finder.util
 
 import com.tester.finder.core.Bug
 import com.tester.finder.core.repository.BugsRepository
@@ -13,9 +13,17 @@ import com.tester.finder.core.repository.implementation.InMemoryTestersRepositor
 import com.tester.finder.core.Tester
 import com.tester.finder.core.repository.TestersRepository
 
-class TestRepositories {
+class TestRepositoryFactory {
 
-    static Repositories prepareRepositories(List<Tester> testers, List<Device> devices, List<Bug> bugs) {
+    static Repositories create() {
+        new Repositories(
+                new InMemoryTestersRepository(),
+                new InMemoryDevicesRepository(),
+                new InMemoryBugsRepository(),
+                new InMemoryCountriesRepository())
+    }
+
+    static Repositories create(List<Tester> testers, List<Device> devices, List<Bug> bugs) {
         TestersRepository testersRepository = initTestersRepository(testers)
         DevicesRepository devicesRepository = initDevicesRepository(devices)
         BugsRepository bugsRepository = initBugsRepository(bugs)
@@ -24,7 +32,7 @@ class TestRepositories {
         new Repositories(testersRepository, devicesRepository, bugsRepository, countriesRepository)
     }
 
-    static Repositories prepareRepositories(List<Tester> testers, List<Device> devices, List<Bug> bugs, List<Country> countries) {
+    static Repositories create(List<Tester> testers, List<Device> devices, List<Bug> bugs, List<Country> countries) {
         TestersRepository testersRepository = initTestersRepository(testers)
         DevicesRepository devicesRepository = initDevicesRepository(devices)
         BugsRepository bugsRepository = initBugsRepository(bugs)

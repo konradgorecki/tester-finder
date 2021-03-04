@@ -1,6 +1,7 @@
-package com.tester.finder.initialization;
+package com.tester.finder.initialization.initializer.implementation;
 
 import com.tester.finder.core.repository.DevicesRepository;
+import com.tester.finder.initialization.initializer.DevicesDataInitializer;
 import lombok.AllArgsConstructor;
 
 import java.io.File;
