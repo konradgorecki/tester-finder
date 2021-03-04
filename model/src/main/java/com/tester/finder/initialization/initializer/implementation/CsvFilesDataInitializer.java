@@ -27,9 +27,9 @@ public class CsvFilesDataInitializer implements DataInitializer {
     @Override
     public void initData(File testersFile, File devicesFile, File testerDevicesFile, File bugsFile) {
         countriesDataInitializer.initFromFile(testersFile);
-        testersDataInitializer.initFromFile(testersFile);
-        devicesDataInitializer.initFromFile(devicesFile);
-        testerDeviceDataInitializer.initFromFile(testerDevicesFile);
-        bugsDataInitializer.initFromFile(bugsFile);
+//        testersDataInitializer.initFromFile(testersFile);
+//        devicesDataInitializer.initFromFile(devicesFile);
+//        testerDeviceDataInitializer.initFromFile(testerDevicesFile);
+//        bugsDataInitializer.initFromFile(bugsFile);
     }
 }

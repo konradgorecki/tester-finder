@@ -22,7 +22,6 @@ class CsvFileTestersDataInitializerTest extends Specification {
         then:
         noExceptionThrown()
         repositories.getCountriesRepository().findAll().size() == 2
-        2 * repositories.countriesRepository.save(_)
         repositories.getCountriesRepository().findByCodes(List.of('PL', 'DE')).size() == 2
     }
 
@@ -41,7 +40,6 @@ class CsvFileTestersDataInitializerTest extends Specification {
         then:
         noExceptionThrown()
         repositories.getTestersRepository().findAll().size() == 2
-        2 * repositories.testersRepository.save(_)
 
         def tester1 = repositories.getTestersRepository().findById(1)
         tester1 != null
@@ -70,7 +68,6 @@ class CsvFileTestersDataInitializerTest extends Specification {
 
         then:
         noExceptionThrown()
-        2 * repositories.devicesRepository.save(_)
         repositories.getDevicesRepository().findAll().size() == 2
 
         def device1 = repositories.getDevicesRepository().findById(1)
@@ -121,7 +118,7 @@ class CsvFileTestersDataInitializerTest extends Specification {
         dataInitializer.initData(testFiles.getTestersTestFile(), testFiles.getDevicesTestFile(), testFiles.getTesterDeviceMatchingFile(), testFiles.getBugsFile())
 
         then:
-        10 * repositories.bugsRepository.save(_)
+        repositories.getBugsRepository().findAll().size() == 10
     }
 
 }
