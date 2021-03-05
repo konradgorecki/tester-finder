@@ -8,4 +8,5 @@ public interface CountriesRepository {
     List<Country> findAll();
     void save(Country country);
     List<Country> findByCodes(List<String> countryCodes);
+    Country findByCode(String country);
 }

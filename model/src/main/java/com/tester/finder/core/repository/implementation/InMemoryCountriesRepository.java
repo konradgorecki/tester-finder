@@ -30,4 +30,9 @@ public class InMemoryCountriesRepository implements CountriesRepository {
                 .filter(Objects::nonNull) // Map::get might return null in case of missing object
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Country findByCode(String country) {
+        return countries.get(country);
+    }
 }

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Value;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,7 +16,7 @@ public class Tester {
     String lastName;
     Country country;
     LocalDateTime lastLogin;
-    List<Device> devices;
+    List<Device> devices = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

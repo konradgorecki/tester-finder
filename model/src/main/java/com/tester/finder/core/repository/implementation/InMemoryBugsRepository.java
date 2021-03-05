@@ -6,9 +6,7 @@ import com.tester.finder.core.Bug;
 import com.tester.finder.core.Tester;
 import com.tester.finder.core.repository.BugsRepository;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class InMemoryBugsRepository implements BugsRepository {
 
@@ -27,6 +25,11 @@ public class InMemoryBugsRepository implements BugsRepository {
     @Override
     public Collection<Bug> findByTester(Tester tester) {
         return bugs.get(tester);
+    }
+
+    @Override
+    public List<Bug> findAll() {
+        return new ArrayList<>(bugs.values());
     }
 
 }

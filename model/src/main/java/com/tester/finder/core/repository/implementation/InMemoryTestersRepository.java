@@ -1,45 +1,45 @@
 package com.tester.finder.core.repository.implementation;
 
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Multimap;
 import com.tester.finder.core.Tester;
 import com.tester.finder.core.repository.TestersRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class InMemoryTestersRepository implements TestersRepository {
 
-    private final Multimap<Integer, Tester> testersMappedByDeviceId = LinkedHashMultimap.create();
-    private final Set<Integer> ids = new HashSet<>();
+    private final Map<Integer, Tester> testers = new HashMap<>();
 
     @Override
     public List<Tester> findAll() {
-        return new ArrayList<>(new HashSet<>(testersMappedByDeviceId.values()));
+        return new ArrayList<>(testers.values());
     }
 
     @Override
     public void save(Tester tester) {
-        if (ids.contains(tester.getId())) {
+        if (testers.containsKey(tester.getId())) {
             throw new IllegalArgumentException(String.format("Tester with id %s already exists.", tester.getId()));
         }
-        ids.add(tester.getId());
-        tester.getDevices().forEach(device -> testersMappedByDeviceId.put(device.getId(), tester));
-
+        testers.put(tester.getId(), tester);
     }
 
     @Override
     public List<Tester> findByDeviceId(List<Integer> deviceIds) {
-        return deviceIds.stream()
-                .flatMap(deviceId -> testersMappedByDeviceId.get(deviceId).stream())
+        return testers.values().stream()
+                .filter(tester -> this.hasAnyOfTheDevices(tester, deviceIds))
                 .collect(Collectors.toList());
+    }
+
+    private boolean hasAnyOfTheDevices(Tester tester, List<Integer> deviceIds) {
+        return tester.getDevices().stream()
+                .anyMatch(device -> deviceIds.contains(device.getId()));
     }
 
     @Override
     public Tester findById(Integer id) {
-        return findAll().stream()
-                .filter(tester -> tester.getId().equals(id))
-                .findAny()
-                .orElse(null);
+        return testers.get(id);
     }
 }

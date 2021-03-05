@@ -8,9 +8,9 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
 @Getter
 @Setter
+@NoArgsConstructor
 public class Tester {
 
     @CsvBindByName
@@ -29,3 +29,4 @@ public class Tester {
     @CsvDate("yyyy-MM-dd HH:mm:ss")
     LocalDateTime lastLogin;
 }
+

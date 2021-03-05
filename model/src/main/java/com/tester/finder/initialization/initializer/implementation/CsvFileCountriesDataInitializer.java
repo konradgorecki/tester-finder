@@ -24,7 +24,8 @@ public class CsvFileCountriesDataInitializer implements CountriesDataInitializer
         List<Tester> testers;
         try {
             testers = new CsvToBeanBuilder<Tester>(new FileReader(file))
-                    .withType(Tester.class).build().parse();
+                    .withType(Tester.class)
+                    .withFilter(new SkipEmptyLinesCsvToBeanFilter()).build().parse();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new IllegalStateException(String.format("Testers File not found! %s", file.getAbsolutePath()));
