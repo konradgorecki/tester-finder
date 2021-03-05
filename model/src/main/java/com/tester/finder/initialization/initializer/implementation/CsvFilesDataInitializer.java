@@ -10,14 +10,12 @@ import java.io.File;
 
 public class CsvFilesDataInitializer implements DataInitializer {
 
-    private final CountriesDataInitializer countriesDataInitializer;
     private final TestersDataInitializer testersDataInitializer;
     private final DevicesDataInitializer devicesDataInitializer;
     private final TesterDeviceDataInitializer testerDeviceDataInitializer;
     private final BugsDataInitializer bugsDataInitializer;
 
     public CsvFilesDataInitializer(CountriesRepository countriesRepository, TestersRepository testersRepository, DevicesRepository devicesRepository, BugsRepository bugsRepository) {
-        this.countriesDataInitializer = new CsvFileCountriesDataInitializer(countriesRepository);
         this.testersDataInitializer = new CsvFileTestersDataInitializer(testersRepository, countriesRepository);
         this.devicesDataInitializer = new CsvFileDevicesDataInitializer(devicesRepository);
         this.testerDeviceDataInitializer = new CsvFileTesterDeviceDataInitializer(testersRepository, devicesRepository);
@@ -26,7 +24,6 @@ public class CsvFilesDataInitializer implements DataInitializer {
 
     @Override
     public void initData(File testersFile, File devicesFile, File testerDevicesFile, File bugsFile) {
-        countriesDataInitializer.initFromFile(testersFile);
         testersDataInitializer.initFromFile(testersFile);
         devicesDataInitializer.initFromFile(devicesFile);
         testerDeviceDataInitializer.initFromFile(testerDevicesFile);
