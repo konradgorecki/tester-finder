@@ -1,7 +1,6 @@
 package com.tester.finder.initialization.initializer.implementation;
 
 import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.bean.CsvToBeanFilter;
 import com.tester.finder.core.repository.DevicesRepository;
 import com.tester.finder.initialization.Device;
 import com.tester.finder.initialization.initializer.DevicesDataInitializer;
@@ -11,6 +10,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
+
+import static com.tester.finder.initialization.initializer.implementation.CsvBeanFilters.SKIP_EMPTY_LINES;
 
 @AllArgsConstructor
 public class CsvFileDevicesDataInitializer implements DevicesDataInitializer {
@@ -23,7 +24,7 @@ public class CsvFileDevicesDataInitializer implements DevicesDataInitializer {
         try {
             devices = new CsvToBeanBuilder<Device>(new FileReader(file))
                     .withType(Device.class)
-                    .withFilter(new SkipEmptyLinesCsvToBeanFilter()).build().parse();
+                    .withFilter(SKIP_EMPTY_LINES).build().parse();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new IllegalStateException(String.format("Devices File not found! %s", file.getAbsolutePath()));

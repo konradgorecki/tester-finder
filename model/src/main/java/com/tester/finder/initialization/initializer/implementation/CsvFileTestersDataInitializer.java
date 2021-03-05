@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static com.tester.finder.initialization.initializer.implementation.CsvBeanFilters.SKIP_EMPTY_LINES;
+
 @AllArgsConstructor
 public class CsvFileTestersDataInitializer implements TestersDataInitializer {
 
@@ -27,7 +29,7 @@ public class CsvFileTestersDataInitializer implements TestersDataInitializer {
         try {
             testers = new CsvToBeanBuilder<Tester>(new FileReader(file))
                     .withType(Tester.class)
-                    .withFilter(new SkipEmptyLinesCsvToBeanFilter()).build().parse();
+                    .withFilter(SKIP_EMPTY_LINES).build().parse();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new IllegalStateException(String.format("Testers File not found! %s", file.getAbsolutePath()));

@@ -14,6 +14,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.List;
 
+import static com.tester.finder.initialization.initializer.implementation.CsvBeanFilters.SKIP_EMPTY_LINES;
+
 @AllArgsConstructor
 public class CsvFileTesterDeviceDataInitializer implements TesterDeviceDataInitializer {
 
@@ -26,7 +28,7 @@ public class CsvFileTesterDeviceDataInitializer implements TesterDeviceDataIniti
         try {
             mappings = new CsvToBeanBuilder<TesterDeviceMapping>(new FileReader(file))
                     .withType(TesterDeviceMapping.class)
-                    .withFilter(new SkipEmptyLinesCsvToBeanFilter()).build().parse();
+                    .withFilter(SKIP_EMPTY_LINES).build().parse();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new IllegalStateException(String.format("Testers File not found! %s", file.getAbsolutePath()));
