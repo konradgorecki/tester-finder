@@ -1,4 +1,6 @@
-package com.tester.finder.search;
+package com.tester.finder.search.finder.implementation;
+
+import com.tester.finder.search.FoundTester;
 
 import java.util.Comparator;
 

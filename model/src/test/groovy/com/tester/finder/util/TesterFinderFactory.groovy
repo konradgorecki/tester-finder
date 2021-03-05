@@ -4,9 +4,9 @@ import com.tester.finder.core.Bug
 import com.tester.finder.core.Country
 import com.tester.finder.core.Device
 import com.tester.finder.core.Tester
-import com.tester.finder.search.SearchCriteriaValidator
-import com.tester.finder.search.SimpleTestersFinder
-import com.tester.finder.search.TestersFinder
+import com.tester.finder.search.finder.implementation.SearchCriteriaValidator
+import com.tester.finder.search.finder.implementation.SimpleTestersFinder
+import com.tester.finder.search.finder.TestersFinder
 
 class TesterFinderFactory {
     static TestersFinder prepareFinder(List<Tester> testers, List<Device> devices, List<Bug> bugs) {

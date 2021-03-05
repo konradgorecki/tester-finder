@@ -1,8 +1,11 @@
-package com.tester.finder.search;
+package com.tester.finder.search.finder.implementation;
 
 import com.tester.finder.core.*;
 import com.tester.finder.core.repository.BugsRepository;
 import com.tester.finder.core.repository.TestersRepository;
+import com.tester.finder.search.*;
+import com.tester.finder.search.exception.InvalidSearchCriteriaException;
+import com.tester.finder.search.finder.TestersFinder;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 

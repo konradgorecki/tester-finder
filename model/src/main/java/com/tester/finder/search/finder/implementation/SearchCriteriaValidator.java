@@ -1,10 +1,12 @@
-package com.tester.finder.search;
+package com.tester.finder.search.finder.implementation;
 
 import com.google.common.base.Joiner;
 import com.tester.finder.core.repository.CountriesRepository;
 import com.tester.finder.core.Country;
 import com.tester.finder.core.Device;
 import com.tester.finder.core.repository.DevicesRepository;
+import com.tester.finder.search.TesterSearchCriteria;
+import com.tester.finder.search.exception.InvalidSearchCriteriaException;
 import lombok.AllArgsConstructor;
 
 import java.util.List;

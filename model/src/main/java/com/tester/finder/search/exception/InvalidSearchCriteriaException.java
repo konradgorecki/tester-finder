@@ -1,4 +1,4 @@
-package com.tester.finder.search;
+package com.tester.finder.search.exception;
 
 public class InvalidSearchCriteriaException extends RuntimeException {
 

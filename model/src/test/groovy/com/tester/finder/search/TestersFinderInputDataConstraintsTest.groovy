@@ -4,6 +4,8 @@ import com.tester.finder.core.Bug
 import com.tester.finder.core.Country
 import com.tester.finder.core.Device
 import com.tester.finder.core.Tester
+import com.tester.finder.search.exception.InvalidSearchCriteriaException
+import com.tester.finder.search.finder.TestersFinder
 import com.tester.finder.util.BugsFactory
 import com.tester.finder.util.DevicesFactory
 import com.tester.finder.util.TesterFinderFactory

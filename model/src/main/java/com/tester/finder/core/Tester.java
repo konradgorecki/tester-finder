@@ -16,6 +16,7 @@ public class Tester {
     String lastName;
     Country country;
     LocalDateTime lastLogin;
+    @Builder.Default
     List<Device> devices = new ArrayList<>();
 
     @Override
