@@ -5,7 +5,7 @@ import com.tester.finder.core.repository.BugsRepository;
 import com.tester.finder.core.repository.TestersRepository;
 import com.tester.finder.search.*;
 import com.tester.finder.search.exception.InvalidSearchCriteriaException;
-import com.tester.finder.search.finder.TestersFinder;
+import com.tester.finder.search.finder.SearchFacade;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
 
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @AllArgsConstructor
-public class SimpleTestersFinder implements TestersFinder {
+public class SimpleTestersFinder implements SearchFacade {
 
     private final TestersRepository testersRepository;
     private final BugsRepository bugsRepository;

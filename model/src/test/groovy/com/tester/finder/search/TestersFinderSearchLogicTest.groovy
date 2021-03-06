@@ -4,7 +4,7 @@ import com.tester.finder.core.Bug
 import com.tester.finder.core.Country
 import com.tester.finder.core.Device
 import com.tester.finder.core.Tester
-import com.tester.finder.search.finder.TestersFinder
+import com.tester.finder.search.finder.SearchFacade
 import com.tester.finder.util.BugsFactory
 import com.tester.finder.util.DevicesFactory
 import com.tester.finder.util.TesterFinderFactory
@@ -22,7 +22,7 @@ class TestersFinderSearchLogicTest extends Specification {
         Tester tester = TestersFactory.create(2, 'PL', device)
         List<Bug> bugs = BugsFactory.create(tester, device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(Country.ALL.code), List.of(device.getId()))
@@ -40,7 +40,7 @@ class TestersFinderSearchLogicTest extends Specification {
         Tester tester = TestersFactory.create(4, 'US', device)
         List<Bug> bugs = BugsFactory.create(tester, device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(tester.getCountry().getCode()), List.of(device.getId()))
@@ -62,7 +62,7 @@ class TestersFinderSearchLogicTest extends Specification {
         Tester tester = TestersFactory.create(5, 'DE', device)
         List<Bug> bugs = BugsFactory.create(tester, device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device, searchedDevice), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device, searchedDevice), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(Country.ALL.code), List.of(searchedDeviceId))
@@ -83,7 +83,7 @@ class TestersFinderSearchLogicTest extends Specification {
         Tester tester = TestersFactory.create(3, testerCountry, List.of(device))
         List<Bug> bugs = BugsFactory.create(tester, device, 5)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs, List.of(testerCountry, searchedCountry))
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs, List.of(testerCountry, searchedCountry))
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(searchedCountry.getCode()), List.of(device.getId()))
@@ -102,7 +102,7 @@ class TestersFinderSearchLogicTest extends Specification {
         Tester tester2 = TestersFactory.create(4, 'AA', device)
         List<Bug> bugs = BugsFactory.create(List.of(tester1, tester2), device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(Country.ALL.getCode()), List.of(device.getId()))
@@ -124,7 +124,7 @@ class TestersFinderSearchLogicTest extends Specification {
         Tester tester2 = TestersFactory.create(4, tester2CountryCode, device)
         List<Bug> bugs = BugsFactory.create(List.of(tester1, tester2), device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(tester1CountryCode, tester2CountryCode), List.of(device.getId()))
@@ -146,7 +146,7 @@ class TestersFinderSearchLogicTest extends Specification {
         Tester tester4 = TestersFactory.create(4, 'GB', device)
         List<Bug> bugs = BugsFactory.create(List.of(tester1, tester2, tester3, tester4), device, 6)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2, tester3, tester4), List.of(device, device2), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2, tester3, tester4), List.of(device, device2), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of('GB'), List.of(device.getId()))
@@ -172,7 +172,7 @@ class TestersFinderSearchLogicTest extends Specification {
         Tester tester4 = TestersFactory.create(7, testersCountryCode1, device)
         List<Bug> bugs = BugsFactory.create(List.of(tester1, tester2, tester3, tester4), device, 7)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2, tester3, tester4), List.of(device, device2), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2, tester3, tester4), List.of(device, device2), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(testersCountryCode2, testersCountryCode3), List.of(device.getId(), device2.getId()))
@@ -201,7 +201,7 @@ class TestersFinderSearchLogicTest extends Specification {
         List<Bug> bugs2 = BugsFactory.create(List.of(tester3, tester4, tester5), device2, bigExperience)
         List<Bug> bugs = Stream.concat(bugs1.stream(), bugs2.stream()).collect(Collectors.toList())
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2, tester3, tester4, tester5), List.of(device, device2), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2, tester3, tester4, tester5), List.of(device, device2), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(Country.ALL.getCode()), List.of(device2.getId()))
@@ -229,7 +229,7 @@ class TestersFinderSearchLogicTest extends Specification {
         Tester tester2 = TestersFactory.create(otherTesterId, otherCountryCode, device)
         List<Bug> bugs = BugsFactory.create(List.of(tester1, tester2), device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(searchedCountryCode), List.of(device.getId()))
@@ -251,7 +251,7 @@ class TestersFinderSearchLogicTest extends Specification {
         Tester tester3 = TestersFactory.create(3, 'FR', device2)
         List<Bug> bugs = BugsFactory.create(List.of(tester1, tester2), device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2, tester3), List.of(device, device2), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2, tester3), List.of(device, device2), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(Country.ALL.getCode()), List.of(Device.ALL.getId()))
@@ -277,7 +277,7 @@ class TestersFinderSearchLogicTest extends Specification {
         List<Bug> bugs2 = BugsFactory.create(List.of(tester2, tester3), device2, lotsOfBugsFixed)
         List<Bug> bugs = Stream.concat(bugs1.stream(), bugs2.stream()).collect(Collectors.toList())
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2, tester3), List.of(device, device2), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester1, tester2, tester3), List.of(device, device2), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(Country.ALL.getCode()), List.of(Device.ALL.getId()))

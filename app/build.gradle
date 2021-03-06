@@ -1,19 +1,19 @@
 plugins {
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
     id 'java'
-}
-
-group 'com.finder'
-version '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
+    id 'application'
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+//    implementation project(':web')
+    implementation project(':model')
+    implementation project(':infrastructure')
+
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 }
 
-test {
-    useJUnitPlatform()
+application {
+    applicationName = 'com.tester.finder.TesterFinderApplication'
 }

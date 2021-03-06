@@ -5,7 +5,7 @@ import com.tester.finder.core.Country
 import com.tester.finder.core.Device
 import com.tester.finder.core.Tester
 import com.tester.finder.search.exception.InvalidSearchCriteriaException
-import com.tester.finder.search.finder.TestersFinder
+import com.tester.finder.search.finder.SearchFacade
 import com.tester.finder.util.BugsFactory
 import com.tester.finder.util.DevicesFactory
 import com.tester.finder.util.TesterFinderFactory
@@ -20,7 +20,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         Tester tester = TestersFactory.create(2, 'PL', device)
         List<Bug> bugs = BugsFactory.create(tester, device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = null
@@ -38,7 +38,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         Tester tester = TestersFactory.create(2, 'PL', device)
         List<Bug> bugs = BugsFactory.create(tester, device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(), List.of(device.getId()))
@@ -56,7 +56,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         Tester tester = TestersFactory.create(2, 'PL', device)
         List<Bug> bugs = BugsFactory.create(tester, device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(null, List.of(device.getId()))
@@ -74,7 +74,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         Tester tester = TestersFactory.create(2, 'PL', device)
         List<Bug> bugs = BugsFactory.create(tester, device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of('EN'), List.of())
@@ -92,7 +92,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         Tester tester = TestersFactory.create(2, 'PL', device)
         List<Bug> bugs = BugsFactory.create(tester, device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of('EN'), null)
@@ -111,7 +111,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         Tester tester = TestersFactory.create(2, 'PL', device)
         List<Bug> bugs = BugsFactory.create(tester, device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of('PL'), List.of(unknownDeviceId))
@@ -130,7 +130,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         Tester tester = TestersFactory.create(2, 'PL', device)
         List<Bug> bugs = BugsFactory.create(tester, device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(unknownCountryCode), List.of(device.getId()))
@@ -148,7 +148,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         Tester tester = TestersFactory.create(2, 'PL', device)
         List<Bug> bugs = BugsFactory.create(tester, device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of(tester.getCountry().getCode(), Country.ALL.getCode()), List.of(device.getId()))
@@ -166,7 +166,7 @@ class TestersFinderInputDataConstraintsTest extends Specification {
         Tester tester = TestersFactory.create(2, 'PL', device)
         List<Bug> bugs = BugsFactory.create(tester, device, 2)
 
-        TestersFinder testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
+        SearchFacade testersFinder = TesterFinderFactory.prepareFinder(List.of(tester), List.of(device), bugs)
 
         and:
         TesterSearchCriteria searchCriteria = new TesterSearchCriteria(List.of('PL'), List.of(device.getId(), Device.ALL.getId()))

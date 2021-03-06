@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: "Tester Finder"
+  profiles:
+    active: "development"
+
+server:
+  port: 8120
+
+management:
+  username: 'admin'
+  pasword: 'pass'
+  server:
+    port: 8220
+    base-path: /management
+  endpoints:
+    web:
+      exposure:
+        include: info,health,metrics,loggers
+  endpoint:
+    health:
+      show-details: when_authorized

@@ -3,13 +3,6 @@ plugins {
     id 'groovy'
 }
 
-group 'com.finder'
-version '0.0.1-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     compile "org.codehaus.groovy:groovy:3.0.7"
     compileOnly 'org.projectlombok:lombok:1.18.16'

@@ -8,7 +8,7 @@ import com.tester.finder.initialization.initializer.*;
 
 import java.io.File;
 
-public class CsvFilesDataInitializer implements DataInitializer {
+public class CsvFilesDataInitializer implements DataInitializationFacade {
 
     private final TestersDataInitializer testersDataInitializer;
     private final DevicesDataInitializer devicesDataInitializer;
