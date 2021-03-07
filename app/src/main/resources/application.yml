@@ -8,10 +8,8 @@ server:
   port: 8120
 
 management:
-  username: 'admin'
-  pasword: 'pass'
   server:
-    port: 8220
+    port: 8120
     base-path: /management
   endpoints:
     web:
@@ -20,3 +18,10 @@ management:
   endpoint:
     health:
       show-details: when_authorized
+
+datasource:
+  files:
+    testersFilePath: 'C:\testerFinder\testers.csv'
+    devicesFilePath: 'C:\testerFinder\devices.csv'
+    testerDevicesMappingFilePath: 'C:\testerFinder\tester_device.csv'
+    bugsFilePath: 'C:\testerFinder\bugs.csv'

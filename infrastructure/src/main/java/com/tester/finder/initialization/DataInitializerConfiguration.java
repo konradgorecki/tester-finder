@@ -6,11 +6,18 @@ import com.tester.finder.core.repository.DevicesRepository;
 import com.tester.finder.core.repository.TestersRepository;
 import com.tester.finder.initialization.initializer.DataInitializationFacade;
 import com.tester.finder.initialization.initializer.implementation.CsvFilesDataInitializer;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DataInitializerConfiguration {
+
+    @Bean
+    @ConfigurationProperties(prefix = "datasource.files")
+    public SourceFilesProperties sourceFilesProperties() {
+        return new SourceFilesProperties();
+    }
 
     @Bean
     public DataInitializationFacade dataInitializationFacade(CountriesRepository countriesRepository,
