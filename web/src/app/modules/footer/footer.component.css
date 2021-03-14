@@ -1,0 +1,17 @@
+mat-toolbar {
+  background: #e91e63 !important;
+  font-size: 12px;
+  font-weight: lighter;
+
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  padding: 8px;
+}
+
+.copyright {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
