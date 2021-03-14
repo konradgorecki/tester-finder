@@ -1,0 +1,20 @@
+app-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+app-main-page {
+  margin-top: 64px;
+  overflow-y: auto;
+}
+
+app-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  width: 100%;
+}
