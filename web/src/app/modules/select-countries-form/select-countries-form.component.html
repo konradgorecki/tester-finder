@@ -1,0 +1,32 @@
+<div [formGroup]="form" class="countries-chip-list">
+  <mat-form-field class="countries-chip-list">
+    <mat-chip-list #chipList aria-label="Country selection">
+      <mat-chip
+        *ngFor="let country of countries"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="remove(country)">
+        {{country.code}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input
+        placeholder="Please select countries..."
+        formControlName="countries"
+        #countriesInput
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]=true
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let country of filteredCountries | async" [value]="country">
+        {{country.code | uppercase}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error>
+      At least one Country has to be selected.
+    </mat-error>
+  </mat-form-field>
+
+</div>

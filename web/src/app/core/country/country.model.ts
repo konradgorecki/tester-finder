@@ -1,3 +1,3 @@
 export class Country {
-  code: string;
+  code!: string;
 }
