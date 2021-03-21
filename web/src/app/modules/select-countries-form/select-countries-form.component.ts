@@ -1,13 +1,4 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  forwardRef,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import {ChangeDetectionStrategy, Component, ElementRef, forwardRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Country} from "../../core/country/country.model";
 import {
   ControlValueAccessor,
@@ -15,7 +6,7 @@ import {
   FormControl,
   FormGroup,
   NG_VALIDATORS,
-  NG_VALUE_ACCESSOR, Validators
+  NG_VALUE_ACCESSOR
 } from "@angular/forms";
 import {Observable, Subscription} from "rxjs";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
@@ -42,14 +33,14 @@ import {CountryService} from "../../core/country/country.service";
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SelectCountriesFormComponent implements ControlValueAccessor, OnInit, OnDestroy, AfterViewInit {
+export class SelectCountriesFormComponent implements ControlValueAccessor, OnInit, OnDestroy {
   form!: FormGroup;
   subscriptions: Subscription[] = [];
 
-  visible = true;
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
+  ALL_COUNTRIES = 'ALL';
   filteredCountries !: Observable<Country[]>;
   countries: Country[] = [];
   // allCountries!: Country[];
@@ -58,6 +49,11 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
   @ViewChild('countriesInput') countriesInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete!: MatAutocomplete;
   @ViewChild('chipList') chipList!: MatChipList;
+
+  onChange: any = () => {
+  };
+  onTouched: any = () => {
+  };
 
   /**
    * TODO DELETE THIS
@@ -69,21 +65,10 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
     return c;
   }
 
-  get value(): Country[] {
-    alert ('Get value called');
-    return this.countries;
-  }
-
-  set value(value: Country[]) {
-    this.countries = value;
-    this.onChange(value);
-    this.onTouched();
-  }
-
   constructor(private formBuilder: FormBuilder, private countryService: CountryService) {
     this.form = this.formBuilder.group({
       countriesInput: [],
-      countries: [this.countries, Validators.minLength(1)]
+      countries: [this.countries]
     });
 
     this.subscriptions.push(
@@ -94,7 +79,7 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
     )
   }
 
-  ngOnInit() : void {
+  ngOnInit(): void {
     // this.countryService.getCountries().subscribe(countries => {
     //   this.allCountries = countries;
     //   this.filteredCountries = this.form.controls.countries.valueChanges.pipe(
@@ -108,29 +93,20 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
       map(country => this.filterOnValueChange(country)));
   }
 
-  ngAfterViewInit(): void {
-    this.updateFormControlValidityStatus();
-  }
-
-  private filterOnValueChange(country: any) : Country[] {
-    let isCountry = country instanceof Country;
-    let isStringWithCountryCode = (typeof country === 'string' || country instanceof String);
-    if (country) {
-      if (isCountry)
-        return this._filter((country as Country).code);
-      else if (isStringWithCountryCode)
-        return this._filter(country as string);
-    }
-    return this.getAvailableCountries().slice();
-  }
-
   ngOnDestroy(): void {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  onChange: any = () => {};
-  onTouched: any = () => {};
-  private ALL_COUNTRIES = 'ALL';
+  writeValue(value: any): void {
+    if (value) {
+      this.countries = value;
+      this.onChange(value);
+      this.onTouched();
+    }
+    if (value === null) {
+      this.form.reset();
+    }
+  }
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -140,17 +116,8 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
     this.onTouched = fn;
   }
 
-  writeValue(value: any): void {
-    if (value) {
-      this.value = value;
-    }
-    if (value === null) {
-      this.form.reset();
-    }
-  }
-
   validate(_: FormControl) {
-    return this.form.valid && this.countries.length > 0 ? null : {profile: { valid: false}, };
+    return this.form.valid && this.countries.length > 0 ? null : {profile: {valid: false},};
   }
 
   add(event: MatChipInputEvent): void {
@@ -162,33 +129,8 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
     }
   }
 
-  getCountryForCode(code: string): Country {
-    return this.allCountries.filter(country => country.code === code)[0];
-  }
-
-  remove(country: Country): void {
-    const index = this.countries.indexOf(country);
-
-    if (index >= 0) {
-      this.countries.splice(index, 1);
-      this.resetInput();
-    }
-    this.updateFormControlValidityStatus();
-  }
-
-  resetInput(): void {
-    this.countriesInput.nativeElement.value = '';
-    this.form.controls.countriesInput.setValue(this.countries);
-  }
-
   selected(event: MatAutocompleteSelectedEvent): void {
     this.addCountry(event.option.value)
-  }
-
-  private _filter(value: String): Country[] {
-    const filterValue = value.toLowerCase();
-
-    return this.getAvailableCountries().filter(country => country.code.toLowerCase().indexOf(filterValue) === 0);
   }
 
   private addCountry(country: Country): void {
@@ -202,6 +144,43 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
     this.countries.push(country);
     this.resetInput();
     this.updateFormControlValidityStatus();
+  }
+
+  remove(country: Country): void {
+    const index = this.countries.indexOf(country);
+
+    if (index >= 0) {
+      this.countries.splice(index, 1);
+      this.resetInput();
+    }
+    this.updateFormControlValidityStatus();
+  }
+
+  private filterOnValueChange(country: any): Country[] {
+    let isCountry = country instanceof Country;
+    let isStringWithCountryCode = (typeof country === 'string' || country instanceof String);
+    if (country) {
+      if (isCountry)
+        return this._filter((country as Country).code);
+      else if (isStringWithCountryCode)
+        return this._filter(country as string);
+    }
+    return this.getAvailableCountries().slice();
+  }
+
+  private _filter(value: String): Country[] {
+    const filterValue = value.toLowerCase();
+
+    return this.getAvailableCountries().filter(country => country.code.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  getCountryForCode(code: string): Country {
+    return this.allCountries.filter(country => country.code === code)[0];
+  }
+
+  resetInput(): void {
+    this.countriesInput.nativeElement.value = '';
+    this.form.controls.countriesInput.setValue(this.countries);
   }
 
   private getAvailableCountries(): Country[] {
@@ -219,7 +198,7 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
     return this.countries.some(selectedCountry => selectedCountry.code === country.code);
   }
 
-  private updateFormControlValidityStatus(): void{
+  private updateFormControlValidityStatus(): void {
     if (this.form.dirty)
       this.chipList.errorState = this.countries.length <= 0;
   }
