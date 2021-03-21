@@ -1,8 +1,8 @@
 <div [formGroup]="form" class="countries-chip-list">
   <mat-form-field class="countries-chip-list">
-    <mat-chip-list #chipList aria-label="Country selection">
+    <mat-chip-list #chipList aria-label="Country selection" formArrayName="countries">
       <mat-chip
-        *ngFor="let country of countries"
+        *ngFor="let country of countryControls.value"
         [selectable]="selectable"
         [removable]="removable"
         (removed)="remove(country)">
@@ -11,7 +11,6 @@
       </mat-chip>
       <input
         placeholder="Please select countries..."
-        formControlName="countries"
         #countriesInput
         [matAutocomplete]="auto"
         [matChipInputFor]="chipList"

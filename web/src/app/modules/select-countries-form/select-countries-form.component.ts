@@ -10,12 +10,12 @@ import {
 } from '@angular/core';
 import {Country} from "../../core/country/country.model";
 import {
-  ControlValueAccessor,
+  ControlValueAccessor, FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
   NG_VALIDATORS,
-  NG_VALUE_ACCESSOR
+  NG_VALUE_ACCESSOR, Validators
 } from "@angular/forms";
 import {Observable, Subscription} from "rxjs";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
@@ -59,6 +59,10 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
   @ViewChild('auto') matAutocomplete!: MatAutocomplete;
   @ViewChild('chipList') chipList!: MatChipList;
 
+  get countryControls(): FormArray {
+    return this.form.controls.countries as FormArray;
+  }
+
   /**
    * TODO DELETE THIS
    * @param code
@@ -82,7 +86,7 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
 
   constructor(private formBuilder: FormBuilder, private countryService: CountryService) {
     this.form = this.formBuilder.group({
-      countries: []
+      countries: this.formBuilder.array([], Validators.required)
     });
 
     this.subscriptions.push(
@@ -149,7 +153,7 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
   }
 
   validate(_: FormControl) {
-    return this.form.valid && this.countries.length > 0 ? null : {profile: { valid: false}, };
+    return this.form.valid && this.countryControls.length > 0 ? null : {profile: { valid: false}, };
   }
 
   add(event: MatChipInputEvent): void {
@@ -166,10 +170,11 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
   }
 
   remove(country: Country): void {
-    const index = this.countries.indexOf(country);
+    const index = this.countryControls.value.indexOf(country);
 
     if (index >= 0) {
-      this.countries.splice(index, 1);
+      // this.countries.splice(index, 1);
+      this.countryControls.removeAt(index);
       this.resetInput();
     }
     this.updateFormControlValidityStatus();
@@ -177,7 +182,7 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
 
   resetInput(): void {
     this.countriesInput.nativeElement.value = '';
-    this.form.controls.countries.setValue(null);
+    // this.form.controls.countries.setValue(null);
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
@@ -196,9 +201,12 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
     }
     let isAllCountriesMarker = country.code === this.ALL_COUNTRIES;
     if (isAllCountriesMarker) {
-      this.countries.splice(0, this.countries.length);
+
+      // this.countries.splice(0, this.countries.length);
+      this.countryControls.clear();
     }
-    this.countries.push(country);
+    this.countryControls.push(this.formBuilder.control(country));
+    // this.countries.push(country);
     this.resetInput();
     this.updateFormControlValidityStatus();
   }
@@ -211,15 +219,18 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
   }
 
   private isAllSelected(): boolean {
-    return this.countries.some(country => country.code === this.ALL_COUNTRIES);
+    return this.countryControls.value.some((country: Country) => country.code === this.ALL_COUNTRIES);
+    // return this.countries.some(country => country.code === this.ALL_COUNTRIES);
   }
 
   private isCountrySelected(country: Country): boolean {
-    return this.countries.some(selectedCountry => selectedCountry.code === country.code);
+    return this.countryControls.value.some((selectedCountry: Country) => selectedCountry.code === country.code);
+    // return this.countries.some(selectedCountry => selectedCountry.code === country.code);
   }
 
   private updateFormControlValidityStatus(): void{
     if (this.form.controls.countries.dirty)
-      this.chipList.errorState = this.countries.length <= 0;
+      this.chipList.errorState = this.countryControls.length <= 0;
+      // this.chipList.errorState = this.countries.length <= 0;
   }
 }
