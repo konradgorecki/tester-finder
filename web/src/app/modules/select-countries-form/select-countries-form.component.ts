@@ -15,7 +15,7 @@ import {
   FormControl,
   FormGroup,
   NG_VALIDATORS,
-  NG_VALUE_ACCESSOR
+  NG_VALUE_ACCESSOR, Validators
 } from "@angular/forms";
 import {Observable, Subscription} from "rxjs";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
@@ -82,11 +82,12 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
 
   constructor(private formBuilder: FormBuilder, private countryService: CountryService) {
     this.form = this.formBuilder.group({
-      countries: []
+      countriesInput: [],
+      countries: [this.countries, Validators.minLength(1)]
     });
 
     this.subscriptions.push(
-      this.form.valueChanges.subscribe(value => {
+      this.form.controls.countriesInput.valueChanges.subscribe(value => {
         this.onChange(value);
         this.onTouched();
       })
@@ -102,7 +103,7 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
     // });
 
 
-    this.filteredCountries = this.form.controls.countries.valueChanges.pipe(
+    this.filteredCountries = this.form.controls.countriesInput.valueChanges.pipe(
       startWith(null),
       map(country => this.filterOnValueChange(country)));
   }
@@ -177,7 +178,7 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
 
   resetInput(): void {
     this.countriesInput.nativeElement.value = '';
-    this.form.controls.countries.setValue(null);
+    this.form.controls.countriesInput.setValue(this.countries);
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
@@ -219,7 +220,7 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
   }
 
   private updateFormControlValidityStatus(): void{
-    if (this.form.controls.countries.dirty)
+    if (this.form.dirty)
       this.chipList.errorState = this.countries.length <= 0;
   }
 }
