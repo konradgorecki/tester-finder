@@ -173,7 +173,6 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
     const index = this.countryControls.value.indexOf(country);
 
     if (index >= 0) {
-      // this.countries.splice(index, 1);
       this.countryControls.removeAt(index);
       this.resetInput();
     }
@@ -182,7 +181,6 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
 
   resetInput(): void {
     this.countriesInput.nativeElement.value = '';
-    // this.form.controls.countries.setValue(null);
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
@@ -202,11 +200,9 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
     let isAllCountriesMarker = country.code === this.ALL_COUNTRIES;
     if (isAllCountriesMarker) {
 
-      // this.countries.splice(0, this.countries.length);
       this.countryControls.clear();
     }
     this.countryControls.push(this.formBuilder.control(country));
-    // this.countries.push(country);
     this.resetInput();
     this.updateFormControlValidityStatus();
   }
@@ -220,17 +216,14 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
 
   private isAllSelected(): boolean {
     return this.countryControls.value.some((country: Country) => country.code === this.ALL_COUNTRIES);
-    // return this.countries.some(country => country.code === this.ALL_COUNTRIES);
   }
 
   private isCountrySelected(country: Country): boolean {
     return this.countryControls.value.some((selectedCountry: Country) => selectedCountry.code === country.code);
-    // return this.countries.some(selectedCountry => selectedCountry.code === country.code);
   }
 
   private updateFormControlValidityStatus(): void{
     if (this.form.controls.countries.dirty)
       this.chipList.errorState = this.countryControls.length <= 0;
-      // this.chipList.errorState = this.countries.length <= 0;
   }
 }
