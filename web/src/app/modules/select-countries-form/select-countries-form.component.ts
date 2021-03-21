@@ -87,7 +87,6 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
     //     map(country => this.filterOnValueChange(country)));
     // });
 
-
     this.filteredCountries = this.form.controls.countriesInput.valueChanges.pipe(
       startWith(null),
       map(country => this.filterOnValueChange(country)));

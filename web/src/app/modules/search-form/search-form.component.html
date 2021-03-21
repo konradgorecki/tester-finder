@@ -1,6 +1,6 @@
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
-  <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
+  <mat-step [stepControl]="countriesFormGroup">
+    <form [formGroup]="countriesFormGroup">
       <ng-template matStepLabel>Fill out testers country of origin</ng-template>
       <app-select-countries-form formControlName="countries"></app-select-countries-form>
       <div>
@@ -9,17 +9,13 @@
     </form>
   </mat-step>
   <!-- #docregion label -->
-  <mat-step [stepControl]="secondFormGroup" label="Fill out test devices">
+  <mat-step [stepControl]="devicesFormGroup" label="Fill out test devices">
     <!-- #enddocregion label -->
-    <form [formGroup]="secondFormGroup">
-      <mat-form-field>
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-               required>
-      </mat-form-field>
+    <form [formGroup]="devicesFormGroup">
+      <app-select-devices-form formControlName="devices"></app-select-devices-form>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="checkCountries(firstFormGroup)">Next</button>
+        <button mat-button matStepperNext>Next</button>
       </div>
     </form>
   </mat-step>
@@ -33,8 +29,14 @@
   </mat-step>
 </mat-horizontal-stepper>
 <p>
-  Form is {{firstFormGroup.valid ? 'Valid' : 'Invalid'}}
+  Devices Form is {{devicesFormGroup.valid ? 'Valid' : 'Invalid'}}
+</p>
+<p>
+  Countries Form is {{countriesFormGroup.valid ? 'Valid' : 'Invalid'}}
 </p>
 <pre>
-  {{firstFormGroup.controls.countries.value | json}}
+  {{devicesFormGroup.controls.devices.value | json}}
+</pre>
+<pre>
+  {{countriesFormGroup.controls.countries.value | json}}
 </pre>

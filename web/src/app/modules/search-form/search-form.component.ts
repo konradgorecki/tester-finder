@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Country} from "../../core/country/country.model";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
   selector: 'app-search-form',
@@ -9,22 +8,18 @@ import {Country} from "../../core/country/country.model";
 })
 export class SearchFormComponent implements OnInit {
   isLinear = true;
-  firstFormGroup !: FormGroup;
-  secondFormGroup !: FormGroup;
-  selectedCountries!: Country[];
+  countriesFormGroup !: FormGroup;
+  devicesFormGroup !: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) {}
-
-  ngOnInit() : void {
-    this.firstFormGroup = this._formBuilder.group({
-      countries: new FormControl(this.selectedCountries, [Validators.required, Validators.minLength(1)])
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
+  constructor(private _formBuilder: FormBuilder) {
   }
 
-  checkCountries(firstFormGroup: FormGroup) {
-    alert(firstFormGroup.value);
+  ngOnInit(): void {
+    this.countriesFormGroup = this._formBuilder.group({
+      countries: []
+    });
+    this.devicesFormGroup = this._formBuilder.group({
+      devices: []
+    });
   }
 }
