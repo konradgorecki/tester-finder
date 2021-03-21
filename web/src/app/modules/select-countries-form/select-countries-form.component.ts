@@ -46,7 +46,6 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
   form!: FormGroup;
   subscriptions: Subscription[] = [];
 
-  visible = true;
   selectable = true;
   removable = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -75,6 +74,7 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
 
   get value(): Country[] {
     alert ('Get value called');
+    //TODO remove alert + swith impl to formarray controls
     return this.countries;
   }
 

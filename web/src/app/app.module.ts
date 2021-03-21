@@ -20,6 +20,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {SelectCountriesFormComponent} from './modules/select-countries-form/select-countries-form.component';
+import { SelectDevicesFormComponent } from './modules/select-devices-form/select-devices-form.component';
 
 //todo pack all angular meterial dependencies into single modle - consider this - https://stackoverflow.com/a/46480745
 @NgModule({
@@ -29,7 +30,8 @@ import {SelectCountriesFormComponent} from './modules/select-countries-form/sele
     MainPageComponent,
     FooterComponent,
     SearchFormComponent,
-    SelectCountriesFormComponent
+    SelectCountriesFormComponent,
+    SelectDevicesFormComponent
   ],
   imports: [
     BrowserModule,

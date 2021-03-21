@@ -1,0 +1,31 @@
+<div [formGroup]="form" class="devices-chip-list">
+  <mat-form-field class="devices-chip-list">
+    <mat-chip-list #chipList aria-label="Test device selection" formArrayName="devices">
+      <mat-chip
+        *ngFor="let device of deviceControls.value"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="remove(device)">
+        {{device.description}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input
+        placeholder="Please select test devices..."
+        #devicesInput
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]=true
+        (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+      <mat-option *ngFor="let device of filteredDevices | async" [value]="device">
+        {{device.description}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-error>
+      At least one Test Device has to be selected.
+    </mat-error>
+  </mat-form-field>
+
+</div>
