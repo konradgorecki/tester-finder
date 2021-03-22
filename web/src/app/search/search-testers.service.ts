@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {API_URL} from "../settings.constant";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {FoundTesters} from "./found-testers.model";
 import {SearchCriteria} from "./search-criteria.model";
@@ -10,16 +10,16 @@ import {SearchCriteria} from "./search-criteria.model";
 })
 export class SearchTestersService {
 
-  private readonly searchTestersUrl = `${API_URL}/search`
+  private readonly searchTestersUrl = `${API_URL}/search/`
 
   constructor(private httpClient: HttpClient) {
   }
 
-  getTestersForSearch(searchId: String): Observable<FoundTesters> {
-    return new Observable<FoundTesters>();//TODO implement
+  createSearch(searchCriteria: SearchCriteria): Observable<String> {
+    return this.httpClient.post<String>(`${this.searchTestersUrl}` + `create`, searchCriteria);
   }
 
-  createSearch(searchCriteria: SearchCriteria): Observable<String> {
-    return new Observable<String>();//TODO implement
+  getTestersForSearch(searchId: String): Observable<FoundTesters> {
+    return this.httpClient.get<FoundTesters>(`${this.searchTestersUrl}` + `results/` + searchId);
   }
 }
