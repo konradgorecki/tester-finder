@@ -43,8 +43,8 @@ export class SelectDevicesFormComponent implements ControlValueAccessor, OnInit,
   ALL_DEVICES_DESC = 'ALL';
   filteredDevices !: Observable<Device[]>;
   devices: Device[] = [];
-  // allDevices!: Device[];
-  allDevices: Device[] = [this.getDevice('ALL', -123), this.getDevice('Sony Xperia X1', 1), this.getDevice('Samsung Galaxy Note 9', 3), this.getDevice('Apple iPhone 4S', 5), this.getDevice('Huawei Mate 2', 9)];
+  allDevices!: Device[];
+  // allDevices: Device[] = [this.getDevice('ALL', -123), this.getDevice('Sony Xperia X1', 1), this.getDevice('Samsung Galaxy Note 9', 3), this.getDevice('Apple iPhone 4S', 5), this.getDevice('Huawei Mate 2', 9)];
 
   @ViewChild('devicesInput') devicesInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete!: MatAutocomplete;
@@ -58,12 +58,12 @@ export class SelectDevicesFormComponent implements ControlValueAccessor, OnInit,
   /**
    * TODO DELETE THIS
    */
-  getDevice(desc: string, id: number): Device {
-    let d = new Device();
-    d.description = desc;
-    d.id = id;
-    return d;
-  }
+  // getDevice(desc: string, id: number): Device {
+  //   let d = new Device();
+  //   d.description = desc;
+  //   d.id = id;
+  //   return d;
+  // }
 
   constructor(private formBuilder: FormBuilder, private deviceService: DeviceService) {
     this.form = this.formBuilder.group({
@@ -80,16 +80,16 @@ export class SelectDevicesFormComponent implements ControlValueAccessor, OnInit,
   }
 
   ngOnInit(): void {
-    // this.deviceService.getDevices().subscribe(devices => {
-    //   this.allDevices = devices;
-    //   this.filteredDevices = this.form.controls.devices.valueChanges.pipe(
-    //     startWith(null),
-    //     map(device => this.filterOnValueChange(device)));
-    // });
-
-    this.filteredDevices = this.form.controls.devicesInput.valueChanges.pipe(
-      startWith(null),
-      map(device => this.filterOnValueChange(device)));
+    this.deviceService.getDevices().subscribe(devices => {
+      this.allDevices = devices;
+      this.filteredDevices = this.form.controls.devicesInput.valueChanges.pipe(
+        startWith(null),
+        map(device => this.filterOnValueChange(device)));
+    });
+    //
+    // this.filteredDevices = this.form.controls.devicesInput.valueChanges.pipe(
+    //   startWith(null),
+    //   map(device => this.filterOnValueChange(device)));
   }
 
   ngOnDestroy(): void {

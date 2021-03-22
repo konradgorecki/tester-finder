@@ -12,7 +12,8 @@ import {Device} from "../../core/device/device.model";
   styleUrls: ['./search-executor.component.css']
 })
 export class SearchExecutorComponent implements OnInit {
-  foundTesters: FoundTester[] = [SearchExecutorComponent.getFoundTester(), SearchExecutorComponent.getFoundTester(), SearchExecutorComponent.getFoundTester()]
+  // foundTesters: FoundTester[] = [SearchExecutorComponent.getFoundTester(), SearchExecutorComponent.getFoundTester(), SearchExecutorComponent.getFoundTester()]
+  foundTesters!: FoundTester[];
 
   @Input()
   selectedCountries!: Country[];

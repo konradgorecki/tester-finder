@@ -23,10 +23,8 @@ import {SelectCountriesFormComponent} from './modules/select-countries-form/sele
 import { SelectDevicesFormComponent } from './modules/select-devices-form/select-devices-form.component';
 import { SearchExecutorComponent } from './modules/search-executor/search-executor.component';
 import {MatExpansionModule} from "@angular/material/expansion";
-import {MatDividerModule} from "@angular/material/divider";
 import {MatCardModule} from "@angular/material/card";
 
-//todo pack all angular meterial dependencies into single modle - consider this - https://stackoverflow.com/a/46480745
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +51,6 @@ import {MatCardModule} from "@angular/material/card";
     MatChipsModule,
     MatAutocompleteModule,
     MatExpansionModule,
-    MatDividerModule,
     MatCardModule,
     ReactiveFormsModule
   ],

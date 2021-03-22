@@ -1,6 +1,7 @@
 <div class="search-executor-main-container">
   <div class="search-executor-inner-container">
-    <button mat-button (click)="search()">Search</button>
+
+    <p>Found {{foundTesters ? foundTesters.length : 0}} testers!</p>
 
     <mat-expansion-panel *ngFor="let foundTester of foundTesters" hideToggle>
       <mat-expansion-panel-header>
@@ -12,7 +13,6 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <mat-card><div>Country of origin:</div><div class="flex-spacer"></div> <div>{{foundTester.tester.country.code | uppercase}}</div></mat-card>
-      <!--  <mat-divider></mat-divider>-->
       <mat-card><div>Last login:</div><div class="flex-spacer"></div><div>{{foundTester.tester.lastLogin | date}}</div></mat-card>
     </mat-expansion-panel>
 

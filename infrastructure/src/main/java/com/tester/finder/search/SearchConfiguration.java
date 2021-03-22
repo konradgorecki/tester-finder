@@ -7,6 +7,8 @@ import com.tester.finder.core.repository.TestersRepository;
 import com.tester.finder.search.finder.SearchFacade;
 import com.tester.finder.search.finder.implementation.SearchCriteriaValidator;
 import com.tester.finder.search.finder.implementation.SimpleTestersFinder;
+import com.tester.finder.search.repository.SearchCriteriaRepository;
+import com.tester.finder.search.repository.implementation.InMemorySearchCriteriaRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,7 +21,12 @@ public class SearchConfiguration {
     }
 
     @Bean
-    public SearchFacade searchFacade(TestersRepository testersRepository, BugsRepository bugsRepository, SearchCriteriaValidator searchCriteriaValidator) {
-        return new SimpleTestersFinder(testersRepository, bugsRepository, searchCriteriaValidator);
+    public SearchCriteriaRepository searchCriteriaRepository() {
+        return new InMemorySearchCriteriaRepository();
+    }
+
+    @Bean
+    public SearchFacade searchFacade(TestersRepository testersRepository, BugsRepository bugsRepository, SearchCriteriaValidator searchCriteriaValidator, SearchCriteriaRepository searchCriteriaRepository) {
+        return new SimpleTestersFinder(testersRepository, bugsRepository, searchCriteriaValidator, searchCriteriaRepository);
     }
 }

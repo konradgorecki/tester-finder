@@ -12,6 +12,8 @@ import com.tester.finder.core.repository.implementation.InMemoryDevicesRepositor
 import com.tester.finder.core.repository.implementation.InMemoryTestersRepository
 import com.tester.finder.core.Tester
 import com.tester.finder.core.repository.TestersRepository
+import com.tester.finder.search.repository.SearchCriteriaRepository
+import com.tester.finder.search.repository.implementation.InMemorySearchCriteriaRepository
 
 class TestRepositoryFactory {
 
@@ -20,7 +22,8 @@ class TestRepositoryFactory {
                 new InMemoryTestersRepository(),
                 new InMemoryDevicesRepository(),
                 new InMemoryBugsRepository(),
-                new InMemoryCountriesRepository())
+                new InMemoryCountriesRepository(),
+                new InMemorySearchCriteriaRepository())
     }
 
     static Repositories create(List<Tester> testers, List<Device> devices, List<Bug> bugs) {
@@ -28,8 +31,9 @@ class TestRepositoryFactory {
         DevicesRepository devicesRepository = initDevicesRepository(devices)
         BugsRepository bugsRepository = initBugsRepository(bugs)
         CountriesRepository countriesRepository = initCountriesRepositoryFromTesters(testers)
+        SearchCriteriaRepository searchCriteriaRepository = new InMemorySearchCriteriaRepository()
 
-        new Repositories(testersRepository, devicesRepository, bugsRepository, countriesRepository)
+        new Repositories(testersRepository, devicesRepository, bugsRepository, countriesRepository, searchCriteriaRepository)
     }
 
     static Repositories create(List<Tester> testers, List<Device> devices, List<Bug> bugs, List<Country> countries) {
@@ -37,8 +41,9 @@ class TestRepositoryFactory {
         DevicesRepository devicesRepository = initDevicesRepository(devices)
         BugsRepository bugsRepository = initBugsRepository(bugs)
         CountriesRepository countriesRepository = initCountriesRepositoryFromCountries(countries)
+        SearchCriteriaRepository searchCriteriaRepository = new InMemorySearchCriteriaRepository()
 
-        new Repositories(testersRepository, devicesRepository, bugsRepository, countriesRepository)
+        new Repositories(testersRepository, devicesRepository, bugsRepository, countriesRepository, searchCriteriaRepository)
     }
 
     static TestersRepository initTestersRepository(List<Tester> testers) {

@@ -1,7 +1,7 @@
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="countriesFormGroup">
     <form [formGroup]="countriesFormGroup">
-      <ng-template matStepLabel>Fill out testers country of origin</ng-template>
+      <ng-template matStepLabel>Fill out country of origin of the testers</ng-template>
       <app-select-countries-form formControlName="countries"></app-select-countries-form>
       <div>
         <button mat-button matStepperNext>Next</button>
@@ -15,13 +15,13 @@
       <app-select-devices-form formControlName="devices"></app-select-devices-form>
       <div>
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext (click)="searchExecutor.search()">Next</button>
       </div>
     </form>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Search for Testers!</ng-template>
-    <app-search-executor [selectedCountries]="countriesFormGroup.controls.countries.value" [selectedDevices]="devicesFormGroup.controls.devices.value"></app-search-executor>
+    <app-search-executor #searchExecutor [selectedCountries]="countriesFormGroup.controls.countries.value" [selectedDevices]="devicesFormGroup.controls.devices.value"></app-search-executor>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="reset()">Reset</button>
