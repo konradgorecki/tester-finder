@@ -21,22 +21,17 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Search for Testers!</ng-template>
-    <p>You are now done.</p>
+    <app-search-executor [selectedCountries]="countriesFormGroup.controls.countries.value" [selectedDevices]="devicesFormGroup.controls.devices.value"></app-search-executor>
     <div>
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-button (click)="reset()">Reset</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>
-<p>
-  Devices Form is {{devicesFormGroup.valid ? 'Valid' : 'Invalid'}}
-</p>
-<p>
-  Countries Form is {{countriesFormGroup.valid ? 'Valid' : 'Invalid'}}
-</p>
-<pre>
-  {{devicesFormGroup.controls.devices.value | json}}
-</pre>
+
 <pre>
   {{countriesFormGroup.controls.countries.value | json}}
+</pre>
+<pre>
+  {{devicesFormGroup.controls.devices.value | json}}
 </pre>

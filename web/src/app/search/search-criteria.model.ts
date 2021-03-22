@@ -1,4 +1,4 @@
 export class SearchCriteria {
-  countryCodes: string[];
-  deviceIds: number[];
+  countryCodes!: string[];
+  deviceIds!: number[];
 }

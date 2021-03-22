@@ -1,6 +1,6 @@
 import {Tester} from "./tester.model";
 
 export class FoundTester {
-  tester: Tester;
-  experience: number;
+  tester!: Tester;
+  experience!: number;
 }

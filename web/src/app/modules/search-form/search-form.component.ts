@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {MatAutocomplete} from "@angular/material/autocomplete";
+import {MatHorizontalStepper, MatStepperModule} from "@angular/material/stepper";
 
 @Component({
   selector: 'app-search-form',
@@ -11,6 +13,8 @@ export class SearchFormComponent implements OnInit {
   countriesFormGroup !: FormGroup;
   devicesFormGroup !: FormGroup;
 
+  @ViewChild('stepper') stepper!:  MatHorizontalStepper;
+
   constructor(private _formBuilder: FormBuilder) {
   }
 
@@ -21,5 +25,11 @@ export class SearchFormComponent implements OnInit {
     this.devicesFormGroup = this._formBuilder.group({
       devices: []
     });
+  }
+
+  reset(): void {
+    this.countriesFormGroup.controls.countries.setValue([]);
+    this.devicesFormGroup.controls.devices.setValue([]);
+    this.stepper.reset();
   }
 }

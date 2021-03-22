@@ -15,7 +15,11 @@ export class SearchTestersService {
   constructor(private httpClient: HttpClient) {
   }
 
-  searchForTesters(searchCriteria: SearchCriteria): Observable<FoundTesters> {
-    return new Observable<FoundTesters>();//TODO implementll
+  getTestersForSearch(searchId: String): Observable<FoundTesters> {
+    return new Observable<FoundTesters>();//TODO implement
+  }
+
+  createSearch(searchCriteria: SearchCriteria): Observable<String> {
+    return new Observable<String>();//TODO implement
   }
 }

@@ -1,0 +1,33 @@
+.search-executor-main-container {
+  width: 100%;
+  padding: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-executor-inner-container {
+  width: 100%;
+  max-width: 700px;
+}
+
+.search-executor-inner-container button {
+  margin-bottom: 10px;
+  background: #e91e63;
+}
+
+mat-expansion-panel {
+  background: #303030;
+  margin: 5px;
+}
+
+mat-card {
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.flex-spacer {
+  flex-grow: 1;
+}
