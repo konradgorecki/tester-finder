@@ -44,7 +44,6 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
   filteredCountries !: Observable<Country[]>;
   countries: Country[] = [];
   allCountries!: Country[];
-  // allCountries: Country[] = [this.getCountry('ALL'), this.getCountry('PL'), this.getCountry('US'), this.getCountry('GB'), this.getCountry('LT')];
 
   @ViewChild('countriesInput') countriesInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete!: MatAutocomplete;
@@ -54,16 +53,6 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
   };
   onTouched: any = () => {
   };
-
-  /**
-   * TODO DELETE THIS
-   * @param code
-   */
-  // getCountry(code: string): Country {
-  //   let c = new Country();
-  //   c.code = code;
-  //   return c;
-  // }
 
   constructor(private formBuilder: FormBuilder, private countryService: CountryService) {
     this.form = this.formBuilder.group({
@@ -86,10 +75,6 @@ export class SelectCountriesFormComponent implements ControlValueAccessor, OnIni
         startWith(null),
         map(country => this.filterOnValueChange(country)));
     });
-
-    // this.filteredCountries = this.form.controls.countriesInput.valueChanges.pipe(
-    //   startWith(null),
-    //   map(country => this.filterOnValueChange(country)));
   }
 
   ngOnDestroy(): void {

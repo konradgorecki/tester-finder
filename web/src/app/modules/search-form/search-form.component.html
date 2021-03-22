@@ -8,9 +8,7 @@
       </div>
     </form>
   </mat-step>
-  <!-- #docregion label -->
   <mat-step [stepControl]="devicesFormGroup" label="Fill out test devices">
-    <!-- #enddocregion label -->
     <form [formGroup]="devicesFormGroup">
       <app-select-devices-form formControlName="devices"></app-select-devices-form>
       <div>
@@ -28,10 +26,3 @@
     </div>
   </mat-step>
 </mat-horizontal-stepper>
-
-<pre>
-  {{countriesFormGroup.controls.countries.value | json}}
-</pre>
-<pre>
-  {{devicesFormGroup.controls.devices.value | json}}
-</pre>

@@ -44,7 +44,6 @@ export class SelectDevicesFormComponent implements ControlValueAccessor, OnInit,
   filteredDevices !: Observable<Device[]>;
   devices: Device[] = [];
   allDevices!: Device[];
-  // allDevices: Device[] = [this.getDevice('ALL', -123), this.getDevice('Sony Xperia X1', 1), this.getDevice('Samsung Galaxy Note 9', 3), this.getDevice('Apple iPhone 4S', 5), this.getDevice('Huawei Mate 2', 9)];
 
   @ViewChild('devicesInput') devicesInput!: ElementRef<HTMLInputElement>;
   @ViewChild('auto') matAutocomplete!: MatAutocomplete;
@@ -54,16 +53,6 @@ export class SelectDevicesFormComponent implements ControlValueAccessor, OnInit,
   };
   onTouched: any = () => {
   };
-
-  /**
-   * TODO DELETE THIS
-   */
-  // getDevice(desc: string, id: number): Device {
-  //   let d = new Device();
-  //   d.description = desc;
-  //   d.id = id;
-  //   return d;
-  // }
 
   constructor(private formBuilder: FormBuilder, private deviceService: DeviceService) {
     this.form = this.formBuilder.group({
@@ -86,10 +75,6 @@ export class SelectDevicesFormComponent implements ControlValueAccessor, OnInit,
         startWith(null),
         map(device => this.filterOnValueChange(device)));
     });
-    //
-    // this.filteredDevices = this.form.controls.devicesInput.valueChanges.pipe(
-    //   startWith(null),
-    //   map(device => this.filterOnValueChange(device)));
   }
 
   ngOnDestroy(): void {
