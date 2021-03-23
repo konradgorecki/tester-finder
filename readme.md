@@ -34,7 +34,7 @@ application.
 
 To build the application run (standing in the projects main catalogue):
 ```
-gradlew clean install
+gradlew clean build
 ```
 
 To start the application from the source code  run (standing in the projects main catalogue):
