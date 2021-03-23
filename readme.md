@@ -1,6 +1,6 @@
 # Testers Finder
 This project is a simple search engine focused on finding Testers in 2-Dimensional space
-defined by testers Country of origin and devices owned by him/her. Focus of the application
+defined by Country of origin of the tester and the by devices owned by him/her. The focus of the application
 is put on a correctness of its output and not on its speed or ability to process large
 amounts of data.
 
@@ -14,7 +14,7 @@ amounts of data.
 * Spock
 
 ## Setup
-To run this project You need to have Java 15 installed / unpacked on your computer and
+To run this project you need to have Java 15 installed / unpacked on your computer and
 environment variable __JAVA_HOME__ set to point to its catalogue.
 
 For Unix systems:
@@ -26,7 +26,7 @@ For Windows system:
 set JAVA_HOME "Path"
 ```
 
-Application is setup is such a way, that Gradle will be downloaded from the internet.
+Application is set up in such a way that Gradle will be downloaded from the internet.
 On the next steps Gradle will download all necessary dependencies (npm included) and
 build the application. As part of this automated build, frontend build (by npm install)
 will be performed, so the instructions placed below are the only ones needed to run the
